@@ -10,7 +10,7 @@ import { useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createIssueSchema } from '@/app/validationSchemas'
 import { z } from 'zod'
-import { errors } from './../../../.next/server/vendor-chunks/next';
+import ErrorMessage from '@/app/components/ErrorMessage'
 
 type IssueForm = z.infer<typeof createIssueSchema>
 
@@ -43,13 +43,13 @@ export default function NewIssuePage() {
                     {/* register('title') returns {name: 'title', onChange: f, onBlur: f, ref: f} */}
                     <TextField.Input placeholder='Title' {...register('title')} /> 
                 </TextField.Root>
-                {errors.title && <Text color='red' as='p'>{errors.title.message}</Text>}
+                <ErrorMessage>{errors.title?.message}</ErrorMessage>
                 <Controller
                     name='description'
                     control={control}
                     render={({ field }) => <SimpleMDE placeholder='Description' {...field}/>}
                 />
-                {errors.description && <Text color='red' as='p'>{errors.description.message}</Text>}
+                <ErrorMessage>{errors.description?.message}</ErrorMessage>
                 <Button>Create Issue</Button>
             </form>
         </div>
