@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from "@radix-ui/themes"
+import { Button } from '@radix-ui/themes'
 
 export default function IssuePage() {
   return (
