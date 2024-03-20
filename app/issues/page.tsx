@@ -1,17 +1,15 @@
 import React from 'react'
-import { Button, Table } from '@radix-ui/themes'
-import Link from 'next/link'
+import { Table } from '@radix-ui/themes'
 import prisma from '@/prisma/client'
 import IssueStatusBadge from '../components/IssueStatusBadge'
+import IssueToolbar from './IssueToolbar'
 
 export default async function IssuePage() {
   const issues = await prisma.issue.findMany()
 
   return (
     <div>
-      <div className='mb-5'>
-        <Button><Link href='/issues/new'>New Issue</Link></Button>
-      </div>
+      <IssueToolbar />
       <Table.Root variant='surface'>
         <Table.Header>
           <Table.Row>
