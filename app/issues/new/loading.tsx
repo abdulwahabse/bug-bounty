@@ -8,7 +8,8 @@ export default function LoadingNewIssuePage() {
     return (
         <Box className='max-w-xl'>
             <Skeleton />
-            <Skeleton height='20rem' />
+            <Skeleton height='25rem' />
+            <Skeleton width='5rem'/>
         </Box>
     )
 } 

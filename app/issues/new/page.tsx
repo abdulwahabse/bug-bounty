@@ -1,7 +1,6 @@
 'use client'
 
 import { Button, Callout, Text, TextField } from '@radix-ui/themes'
-import SimpleMDE from 'react-simplemde-editor'
 import 'easymde/dist/easymde.min.css'
 import { useForm, Controller } from 'react-hook-form'
 import axios from 'axios'
@@ -12,6 +11,18 @@ import { createIssueSchema } from '@/app/validationSchemas'
 import { z } from 'zod'
 import ErrorMessage from '@/app/components/ErrorMessage'
 import Spinner from '@/app/components/Spinner'
+import dynamic from 'next/dynamic'
+import delay from 'delay'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
+const DynamicSimpleMDE = dynamic(
+    () => import('react-simplemde-editor'),
+    { 
+        ssr: false, 
+        loading: () => <Skeleton height='25rem' /> 
+    }
+)
 
 type IssueForm = z.infer<typeof createIssueSchema>
 
@@ -53,7 +64,7 @@ export default function NewIssuePage() {
                 <Controller
                     name='description'
                     control={control}
-                    render={({ field }) => <SimpleMDE placeholder='Description' {...field}/>}
+                    render={({ field }) => <DynamicSimpleMDE placeholder='Description' {...field}/>}
                 />
                 <ErrorMessage>{errors.description?.message}</ErrorMessage>
                 <Button disabled={isSubmitting}>Create Issue {isSubmitting && <Spinner />}</Button>
