@@ -4,7 +4,7 @@ import { Table } from '@radix-ui/themes'
 import Link from '../components/Link'
 import IssueToolbar from './IssueToolbar'
 
-export default async function IssuePage() {
+async function IssuePage() {
   const issues = await prisma.issue.findMany()
 
   return (
@@ -36,3 +36,7 @@ export default async function IssuePage() {
     </div>
   )
 }
+
+export const dynamic = 'force-dynamic'
+
+export default IssuePage
