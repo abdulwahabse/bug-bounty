@@ -1,23 +1,19 @@
 'use client'
 
+import { Skeleton } from '@/app/components'
 import { Issue, User } from '@prisma/client'
 import { Select } from '@radix-ui/themes'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { Skeleton } from '@/app/components'
 import toast, { Toaster } from 'react-hot-toast'
+
 
 interface Props {
     issue: Issue;
 }
 
 export default function AssigneeSelect({ issue }: Props) {
-    const {data: users, error, isLoading} = useQuery<User[]>({
-        queryKey: ['users'],
-        queryFn: () => axios.get('/api/users').then(res => res.data),
-        staleTime: 60 * 1000, // 60s
-        retry: 3
-    })
+    const {data: users, error, isLoading} = useUsers()
 
     if (isLoading) return <Skeleton height='2rem'/>
 
@@ -55,3 +51,10 @@ export default function AssigneeSelect({ issue }: Props) {
         </>
     )
 }
+
+const useUsers = () => useQuery<User[]>({
+    queryKey: ['users'],
+    queryFn: () => axios.get('/api/users').then(res => res.data),
+    staleTime: 60 * 1000, // 60s
+    retry: 3
+})
