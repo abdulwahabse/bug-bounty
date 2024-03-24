@@ -1,15 +1,16 @@
 import { Pagination } from '@/app/components'
 import prisma from '@/prisma/client'
 import { Status } from '@prisma/client'
+import { Flex } from '@radix-ui/themes'
+import { Metadata } from 'next'
 import IssueTable, { columnNames, IssueQuery } from './IssueTable'
 import IssueToolbar from './IssueToolbar'
-import { Flex } from '@radix-ui/themes'
 
 interface Props {
   searchParams: IssueQuery
 }
 
-async function IssuePage({ searchParams }: Props) {
+export default async function IssuePage({ searchParams }: Props) {
   const validStatuses = Object.values(Status)
   const status = validStatuses.includes(searchParams.status)
     ? searchParams.status
@@ -47,4 +48,7 @@ async function IssuePage({ searchParams }: Props) {
 
 export const dynamic = 'force-dynamic'
 
-export default IssuePage
+export const metadata: Metadata = {
+  title: 'Bug Bounty - Issues',
+  description: 'View all project issues'
+}
